@@ -33,11 +33,16 @@ async def chat(payload: ChatRequest):
     groq = get_groq_service()
     history = [m.model_dump() for m in payload.history]
 
+    try:
     result = groq.chat_sync(
-    message=payload.message,
-    history=history,
-    machine_context=machine_context,
-)
+        message=payload.message,
+        history=history,
+        machine_context=machine_context,
+    )
+except Exception as e:
+    from loguru import logger
+    logger.error(f"Erro Groq: {type(e).__name__}: {e}")
+    raise HTTPException(status_code=500, detail=f"Erro Groq: {str(e)}")
 
     return ChatResponse(
         response=result["response"],
