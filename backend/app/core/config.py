@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     # API
     api_secret_key: str = "change-me"
     environment: str = "development"
-    cors_origins: str = "http://localhost:3000"
+    cors_origins: str = "http://localhost:3000,http://localhost:5173"
 
     # ML
     ml_model_path: str = "app/ml/models/"
