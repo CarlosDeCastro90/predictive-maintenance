@@ -33,11 +33,11 @@ async def chat(payload: ChatRequest):
     groq = get_groq_service()
     history = [m.model_dump() for m in payload.history]
 
-    result = await groq.chat(
-        message=payload.message,
-        history=history,
-        machine_context=machine_context,
-    )
+    result = groq.chat_sync(
+    message=payload.message,
+    history=history,
+    machine_context=machine_context,
+)
 
     return ChatResponse(
         response=result["response"],
