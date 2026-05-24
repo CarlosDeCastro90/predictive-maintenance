@@ -16,10 +16,10 @@ async def chat(payload: ChatRequest):
     machine_context = None
 
     if payload.machine_id:
-       result = db.table("machines").select("*").eq(
-    "id", str(payload.machine_id)
-).execute()
-machine = result.data[0] if result.data else None
+        result = db.table("machines").select("*").eq(
+            "id", str(payload.machine_id)
+        ).execute()
+        machine = result.data[0] if result.data else None
 
         if machine:
             reading = db.table("sensor_readings").select(
