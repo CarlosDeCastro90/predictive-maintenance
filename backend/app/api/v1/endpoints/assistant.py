@@ -4,6 +4,7 @@ from fastapi import APIRouter, HTTPException
 from app.db.supabase import get_supabase_admin
 from app.schemas.schemas import ChatRequest, ChatResponse, DashboardStats
 from app.services.groq_service import get_groq_service
+from loguru import logger
 
 router = APIRouter(prefix="/assistant", tags=["AI Assistant"])
 dashboard_router = APIRouter(prefix="/dashboard", tags=["Dashboard"])
@@ -33,14 +34,13 @@ async def chat(payload: ChatRequest):
     groq = get_groq_service()
     history = [m.model_dump() for m in payload.history]
 
-   try:
+    try:
         result = groq.chat_sync(
             message=payload.message,
             history=history,
             machine_context=machine_context,
         )
     except Exception as e:
-        from loguru import logger
         logger.error(f"Erro Groq: {type(e).__name__}: {e}")
         raise HTTPException(status_code=500, detail=f"Erro Groq: {str(e)}")
 
