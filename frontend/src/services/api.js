@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'https://predictive-maintenance-gamma.vercel.app'
+const API_URL = 'https://predictive-maintenance-production-f35b.up.railway.app'
 
 const api = axios.create({
   baseURL: API_URL,
